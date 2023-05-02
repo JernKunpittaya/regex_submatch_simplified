@@ -1,6 +1,6 @@
 const gen = require("./gen");
 const lexical = require("./lexical");
-const gen_DFA = require("./gen_DFA");
+const gen_dfa = require("./gen_dfa");
 const regexpTree = require("regexp-tree");
 
 function tagged_nfaToDfa(nfa) {
@@ -130,7 +130,7 @@ function tagged_compile(regex, submatches) {
     top = stack.pop();
     if (!states.hasOwnProperty(top.id)) {
       states[top.id] = top;
-      top.nature = gen_DFA.toNature(top.id);
+      top.nature = gen_dfa.toNature(top.id);
       nodes.push(top);
       for (i = 0; i < top.edges.length; i += 1) {
         if (top.edges[i][0] !== "ϵ" && symbols.indexOf(top.edges[i][0]) < 0) {
@@ -161,8 +161,8 @@ function tagged_compile(regex, submatches) {
   return graph;
 }
 function tagged_simplifyGraph(regex, submatches) {
-  var after_plus = gen_DFA.simplifyPlus(
-    gen_DFA.simplifyRegex(regex),
+  var after_plus = gen_dfa.simplifyPlus(
+    gen_dfa.simplifyRegex(regex),
     submatches
   );
   const regex_spec = after_plus["regex"];
@@ -589,11 +589,11 @@ function regexSubmatchState(text, tagged_simp_graph) {
 }
 
 function finalRegexExtractState(regex, submatches, text) {
-  const simp_graph = gen_DFA.simplifyGraph(regex);
+  const simp_graph = gen_dfa.simplifyGraph(regex);
   console.log("min_dfa num states: ", simp_graph["states"].length);
   const tagged_simp_graph = tagged_simplifyGraph(regex, submatches);
   console.log("tagged dfa num states: ", tagged_simp_graph["states"].length);
-  const matched_dfa = gen_DFA.findSubstrings(simp_graph, text);
+  const matched_dfa = gen_dfa.findSubstrings(simp_graph, text);
   console.log("matched dfa: ", matched_dfa);
 
   for (const subs of matched_dfa[1]) {

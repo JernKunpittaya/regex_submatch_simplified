@@ -1,6 +1,6 @@
 // gen DFA, tagged version
 const lexical = require("./lexical");
-const gen_dfa = require("./gen_DFA");
+const gen_dfa = require("./gen_dfa");
 const path = require("path");
 const regexpTree = require("regexp-tree");
 const assert = require("assert");
@@ -317,8 +317,6 @@ function readSubmatch(regex, submatches) {
   // console.log("og regex: ", regex);
   var after_plus = gen_dfa.simplifyPlus(regex, submatches);
   // console.log("after plus: ", after_plus);
-  // var final_regex = after_plus["regex"];
-  // var final_submatches = after_plus["submatches"];
   var final_regex = after_plus["regex_show"];
   var final_submatches = after_plus["final_submatches"];
   // console.log("og submatch: ", submatches);
@@ -381,13 +379,9 @@ function readSubmatch(regex, submatches) {
   console.log("input regex: ", result);
   console.log("final regex: ", final_result);
 }
-function hello() {
-  console.log("hello from gen");
-}
 // function
 module.exports = {
   readSubmatch,
   regexToM1,
   simplifyM1,
-  hello,
 };
