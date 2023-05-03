@@ -555,6 +555,7 @@ function regexSubmatchState(text, tagged_simp_graph) {
   var final_graph = findMatchStateTagged(tagged_simp_graph);
   var allTags = final_graph["tags"];
   var transitions = final_graph["transitions"];
+  console.log("final: ", final_graph);
   //   console.log("tran: ", transitions);
   //   console.log("all tags: ", allTags);
   var submatch = {};
@@ -617,10 +618,106 @@ function finalRegexExtractState(regex, submatches, text) {
     }
   }
 }
+
+// call after final graph of tagged dfa e.g.
+// final:  {
+//     states: [
+//       '0',  '1', '2',  '3',
+//       '4',  '5', '6',  '7',
+//       '8',  '9', '10', '11',
+//       '12'
+//     ],
+//     alphabets: Set(15) {
+//       'D',
+//       '/',
+//       '1',
+//       '2',
+//       ';',
+//       ' ',
+//       'K',
+//       'I',
+//       ':',
+//       'a',
+//       'd',
+//       'v',
+//       '=',
+//       'b',
+//       'h'
+//     },
+//     start_state: '0',
+//     accepted_states: Set(1) { '12' },
+//     transitions: {
+//       '0': { D: '4' },
+//       '1': { '1': '1', '2': '1', '/': '1', ';': '2' },
+//       '2': { ' ': '3' },
+//       '3': { b: '11', a: '9', d: '9', v: '9' },
+//       '4': { K: '5' },
+//       '5': { I: '6' },
+//       '6': { ':': '7' },
+//       '7': { ' ': '8' },
+//       '8': { a: '9', d: '9', v: '9' },
+//       '9': { '=': '10' },
+//       '10': { '1': '1', '2': '1', '/': '1' },
+//       '11': { h: '12' },
+//       '12': {}
+//     },
+//     tags: {
+//       '0': Set(7) {
+//         '["8","9"]',
+//         '["3","9"]',
+//         '["9","10"]',
+//         '["10","1"]',
+//         '["1","2"]',
+//         '["2","3"]',
+//         '["1","1"]'
+//       },
+//       '1': Set(2) { '["8","9"]', '["3","9"]' },
+//       '2': Set(2) { '["10","1"]', '["1","1"]' }
+//     }
+//   }
+// Will format transition into forward and backward, with list of transitions that lead to same state
+function formatForCircom(final_graph) {
+  let og_transitions = final_graph["transitions"];
+  let forward_transitions = {};
+  let rev_transitions = Array.from(
+    { length: final_graph["states"].length },
+    () => []
+  );
+  for (let node in og_transitions) {
+    forward_transitions[node] = {};
+    let memState = {};
+    for (const alp in og_transitions[node]) {
+      if (!memState.hasOwnProperty(og_transitions[node][alp])) {
+        memState[og_transitions[node][alp]] = [];
+      }
+      memState[og_transitions[node][alp]].push(alp);
+    }
+    for (const toState in memState) {
+      forward_transitions[node][JSON.stringify(memState[toState])] = toState;
+    }
+  }
+  for (let node in forward_transitions) {
+    for (let arr in forward_transitions[node]) {
+      rev_transitions[parseInt(forward_transitions[node][arr])].push([
+        arr,
+        node,
+      ]);
+    }
+  }
+  //   console.log("og tran: ", og_transitions);
+  //   console.log("forward_tran: ", forward_transitions);
+  //   console.log("rev_tran: ", rev_transitions);
+  return {
+    forward_transitions: forward_transitions,
+    rev_transitions: rev_transitions,
+  };
+}
+
 module.exports = {
   tagged_simplifyGraph,
   tagged_nfaToDfa,
   findMatchStateTagged,
   regexSubmatchState,
   finalRegexExtractState,
+  formatForCircom,
 };

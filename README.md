@@ -29,7 +29,14 @@ Flow:
    var allTags = final_graph["tags"];
    var transitions = final_graph["transitions"];
 
-5. For frontend, will need to show that this stuff really correct. Look at gentagged_dfa.finalRegexExtractState
+5. For Circom, we run
+   gen_tagged_dfa.formatForCircom(final_graph); --> return
+   {
+   forward_transitions: forward_transitions,
+   rev_transitions: rev_transitions,
+   };
+
+6. For frontend, will need to show that this stuff really correct. Look at gen_tagged_dfa.finalRegexExtractState
 
 [Optional]
 

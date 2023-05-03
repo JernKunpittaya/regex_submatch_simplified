@@ -38,7 +38,13 @@ const submatches = [
   [15, 25],
 ];
 gen.readSubmatch(regex, submatches);
-gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
+// gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
+const tagged_simp_graph = gen_tagged_dfa.tagged_simplifyGraph(
+  regex,
+  submatches
+);
+var final_graph = gen_tagged_dfa.findMatchStateTagged(tagged_simp_graph);
+gen_tagged_dfa.formatForCircom(final_graph);
 
 const email_wallet_text = fs.readFileSync("./email_wallet.txt").toString();
 const extension =
