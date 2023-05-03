@@ -77,7 +77,7 @@ function checkEndGroup(index, submatches) {
 function regexToM1(text, submatches) {
   "use strict";
   function generateGraph(node, start, end, count, submatches, memS, memE) {
-    var i,
+    let i,
       last,
       temp,
       tempStart,
@@ -126,7 +126,7 @@ function regexToM1(text, submatches) {
     // interEnd is stuffs state before end. Use as end in this stuffs. will assign id at the end.
     interEnd = end;
     if (endTag) {
-      var newTag = [];
+      let newTag = [];
 
       for (let i = 0; i < endTag.length; i++) {
         // WHY memS and memE
@@ -238,7 +238,7 @@ function regexToM1(text, submatches) {
         )[0];
         break;
     }
-    var backMargin = interEnd;
+    let backMargin = interEnd;
     // console.log("check: ", backMargin);
     while (backMargin != end) {
       if (!backMargin.hasOwnProperty("id")) {
@@ -257,13 +257,13 @@ function regexToM1(text, submatches) {
   }
 
   // New: simplifyRegex and simplify Plus
-  var after_plus = gen_dfa.simplifyPlus(
+  let after_plus = gen_dfa.simplifyPlus(
     gen_dfa.simplifyRegex(text),
     submatches
   );
 
   // console.log("afterrr; ", after_plus["submatches"]);
-  var ast = lexical.parseRegex(after_plus["regex"]),
+  let ast = lexical.parseRegex(after_plus["regex"]),
     start = { type: "start", edges: [] },
     accept = { type: "accept", edges: [] };
   // console.log("Before plus: ", gen_dfa.simplifyRegex(text));
@@ -291,7 +291,6 @@ function simplifyM1(m1) {
     } else {
       q1.add(m1.id);
     }
-    // var edges = m1.edges;
     if (m1.type == "accept") {
       accepted.push(m1.id);
       return;
@@ -305,9 +304,9 @@ function simplifyM1(m1) {
       read_M1(m1.edges[i][1], q1, trans, accepted);
     }
   }
-  var q1 = new Set();
-  var trans = {};
-  var accepted = [];
+  let q1 = new Set();
+  let trans = {};
+  let accepted = [];
   read_M1(m1, q1, trans, accepted);
   return { q1: q1, accepted: accepted, trans: trans };
 }
@@ -315,10 +314,10 @@ function simplifyM1(m1) {
 function readSubmatch(regex, submatches) {
   regex = gen_dfa.simplifyRegex(regex);
   // console.log("og regex: ", regex);
-  var after_plus = gen_dfa.simplifyPlus(regex, submatches);
+  let after_plus = gen_dfa.simplifyPlus(regex, submatches);
   // console.log("after plus: ", after_plus);
-  var final_regex = after_plus["regex_show"];
-  var final_submatches = after_plus["final_submatches"];
+  let final_regex = after_plus["regex_show"];
+  let final_submatches = after_plus["final_submatches"];
   // console.log("og submatch: ", submatches);
   // console.log("after submatch: ", final_submatches);
 
@@ -329,7 +328,7 @@ function readSubmatch(regex, submatches) {
   const defaultColor = "\x1b[0m";
 
   // color of original regex
-  for (var i = 0; i < submatches.length; i++) {
+  for (let i = 0; i < submatches.length; i++) {
     // the actual index of left is leftmost, right is rightmost
     const color = `\x1b[${(i % 7) + 31}m`;
     index_color[submatches[i][0]] = color;
@@ -339,8 +338,8 @@ function readSubmatch(regex, submatches) {
   const sortedIndex = Object.keys(index_color).sort((a, b) => {
     return parseInt(a) - parseInt(b);
   });
-  var result = "";
-  var prev = 0;
+  let result = "";
+  let prev = 0;
   for (const index of sortedIndex) {
     result += regex.slice(prev, parseInt(index)) + index_color[index];
     result += regex[index] + defaultColor;
@@ -349,10 +348,10 @@ function readSubmatch(regex, submatches) {
   result += regex.slice(prev);
 
   // color of final regex
-  for (var i = 0; i < final_submatches.length; i++) {
+  for (let i = 0; i < final_submatches.length; i++) {
     // the actual index of left is leftmost, right is rightmost
     const color = `\x1b[${(i % 7) + 31}m`;
-    for (var match of final_submatches[i]) {
+    for (let match of final_submatches[i]) {
       index_full[match[0]] = color;
       index_full[match[1]] = color;
     }
@@ -360,8 +359,8 @@ function readSubmatch(regex, submatches) {
   const final_sortedIndex = Object.keys(index_full).sort((a, b) => {
     return parseInt(a) - parseInt(b);
   });
-  var final_result = "";
-  var final_prev = 0;
+  let final_result = "";
+  let final_prev = 0;
   for (const index of final_sortedIndex) {
     final_result +=
       final_regex.slice(final_prev, parseInt(index)) + index_full[index];
@@ -371,8 +370,8 @@ function readSubmatch(regex, submatches) {
   final_result += final_regex.slice(final_prev);
 
   // group color
-  var group_color = "Group: ";
-  for (var i = 0; i < color_arr.length; i++) {
+  let group_color = "Group: ";
+  for (let i = 0; i < color_arr.length; i++) {
     group_color += color_arr[i] + i + defaultColor + ", ";
   }
   console.log(group_color.slice(0, group_color.length - 2));

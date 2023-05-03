@@ -30,30 +30,30 @@ const r0to9_nosep = "0123456789";
 const email_address_regex = `([a-zA-Z0-9._%\\+-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9]+)`;
 
 // Example
-const text = fs.readFileSync("./test.txt").toString();
-const regex = "DKI: (([vad]=([12\\/]+); )+)bh";
-const submatches = [
-  [5, 30],
-  [7, 13],
-  [15, 25],
-];
-gen.readSubmatch(regex, submatches);
-// gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
-const tagged_simp_graph = gen_tagged_dfa.tagged_simplifyGraph(
-  regex,
-  submatches
-);
-var final_graph = gen_tagged_dfa.findMatchStateTagged(tagged_simp_graph);
-gen_tagged_dfa.formatForCircom(final_graph);
+// const text = fs.readFileSync("./test.txt").toString();
+// const regex = "DKI: (([vad]=([12\\/]+); )+)bh";
+// const submatches = [
+//   [5, 30],
+//   [7, 13],
+//   [15, 25],
+// ];
+// gen.readSubmatch(regex, submatches);
+// // gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
+// const tagged_simp_graph = gen_tagged_dfa.tagged_simplifyGraph(
+//   regex,
+//   submatches
+// );
+// var final_graph = gen_tagged_dfa.findMatchStateTagged(tagged_simp_graph);
+// console.log("final final graph: ", gen_tagged_dfa.formatForCircom(final_graph));
 
 const email_wallet_text = fs.readFileSync("./email_wallet.txt").toString();
 const extension =
   "-|\\/|.|\"|#|$|%|&|'|\\(|\\)|\\*|\\+|:|<|=|>|\\?|@|\\[|]|^|_|`|{|\\||}|~| |\t|\n|\r|\x0b|\x0c";
 const alphabet = `${a2z}|${A2Z}|${r0to9}|${extension}`;
-// const sig_regex = `\nDKIM-Signature: (${succ_key_chars}=((${alphabet})+);( |\t|\n|\r|\x0b|\x0c)*)+ bh`;
-// const submatches = [
-//   [18, 32],
-//   [34, 236],
-// // ];
-// gen.readSubmatch(sig_regex, submatches);
-// gen_tagged_dfa.finalRegexExtractState(sig_regex, submatches, email_wallet_text);
+const sig_regex = `\nDKIM-Signature: (${succ_key_chars}=((${alphabet})+);( |\t|\n|\r|\x0b|\x0c)*)+ bh`;
+const submatches = [
+  [18, 32],
+  [34, 236],
+];
+gen.readSubmatch(sig_regex, submatches);
+gen_tagged_dfa.finalRegexExtractState(sig_regex, submatches, email_wallet_text);

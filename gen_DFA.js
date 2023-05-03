@@ -102,16 +102,16 @@ function simplifyRegex(str) {
 }
 function simplifyPlus(regex, submatches) {
   // console.log("og submatches: ", submatches);
-  var stack = [];
-  var new_submatches = {};
+  let stack = [];
+  let new_submatches = {};
   // console.log("gen dfa: ", submatches);
   for (const submatch of submatches) {
     new_submatches[submatch] = [[...submatch]];
   }
 
   // console.log("og submatch: ", new_submatches);
-  var numStack = 0;
-  var index_para = {};
+  let numStack = 0;
+  let index_para = {};
   i = 0;
   while (i < regex.length) {
     // console.log("char: ", i, " :  ", regex[i]);
@@ -130,7 +130,7 @@ function simplifyPlus(regex, submatches) {
     }
     if (regex[i] == "+") {
       popGroup = "";
-      var j = stack.length - 1;
+      let j = stack.length - 1;
       // consolidate from each alphabet to one string
       while (j >= index_para[numStack + 1]) {
         // popGroup = stack.pop() + popGroup;
@@ -146,14 +146,14 @@ function simplifyPlus(regex, submatches) {
         // console.log("key sp: ", key.split(",")[1]);
         // console.log("border: ", index_para[numStack + 1]);
         // if submatch in that () that got extended by +
-        var len_before = new_submatches[key].length;
+        let len_before = new_submatches[key].length;
 
         if (
           key.split(",")[1] > index_para[numStack + 1] &&
           key.split(",")[1] <= i - 1
         ) {
           // console.log("bef: ", new_submatches);
-          for (var k = 0; k < len_before; k++) {
+          for (let k = 0; k < len_before; k++) {
             new_submatches[key].push([
               new_submatches[key][k][0] + popGroup.length,
               new_submatches[key][k][1] + popGroup.length,
@@ -164,7 +164,7 @@ function simplifyPlus(regex, submatches) {
         // if submatch end is affected  by enlarging this group
         else if (key.split(",")[1] > i) {
           // console.log("b2: ", submatches);
-          for (var k = 0; k < len_before; k++) {
+          for (let k = 0; k < len_before; k++) {
             if (key.split(",")[0] > i) {
               new_submatches[key][k][0] += popGroup.length;
             }
@@ -187,16 +187,16 @@ function simplifyPlus(regex, submatches) {
     i += 1;
   }
 
-  var almost_submatches = [];
+  let almost_submatches = [];
   // console.log("b4: ", submatches);
   // console.log("b5: ", new_submatches);
   for (const submatch of submatches) {
     almost_submatches.push(new_submatches[submatch[0] + "," + submatch[1]]);
   }
-  var regex_for_parse = stack.join("");
-  var regex_for_show = "";
-  var escape_pos = [];
-  for (var i = 0; i < regex_for_parse.length; i++) {
+  let regex_for_parse = stack.join("");
+  let regex_for_show = "";
+  let escape_pos = [];
+  for (let i = 0; i < regex_for_parse.length; i++) {
     if (regex_for_parse[i] != "\\") {
       regex_for_show += regex_for_parse[i];
     } else {
@@ -204,9 +204,9 @@ function simplifyPlus(regex, submatches) {
     }
   }
   escape_pos.sort((a, b) => a - b);
-  var final_submatches = [];
+  let final_submatches = [];
   for (const group of almost_submatches) {
-    var group_arr = [];
+    let group_arr = [];
     for (const index of group) {
       group_arr.push([
         index[0] - findIndex(escape_pos, index[0]),
@@ -246,7 +246,7 @@ function findIndex(arr, num) {
 }
 
 function toNature(col) {
-  var i,
+  let i,
     j,
     base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     result = 0;
@@ -263,7 +263,7 @@ function compile(regex) {
   let nfa = lexical.regexToNfa(regex);
   let dfa = lexical.minDfa(lexical.nfaToDfa(nfa));
 
-  var i,
+  let i,
     j,
     states = {},
     nodes = [],
