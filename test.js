@@ -38,7 +38,7 @@ const email_address_regex = `([a-zA-Z0-9._%\\+-]+@[a-zA-Z0-9.-]+.[a-zA-Z0-9]+)`;
 //   [15, 25],
 // ];
 // gen.readSubmatch(regex, submatches);
-// // gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
+// gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
 // const tagged_simp_graph = gen_tagged_dfa.tagged_simplifyGraph(
 //   regex,
 //   submatches

@@ -317,8 +317,8 @@ function simplifyGraph(regex) {
   });
 
   const graph_json = compile(regex_spec);
-  console.log("jern here");
-  console.log(graph_json);
+  // console.log("jern here");
+  // console.log(graph_json);
   const N = graph_json.length;
   states = [];
   alphabets = new Set();

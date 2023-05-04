@@ -705,8 +705,8 @@ function formatForCircom(final_graph) {
     }
   }
   //   console.log("og tran: ", og_transitions);
-  //   console.log("forward_tran: ", forward_transitions);
-  //   console.log("rev_tran: ", rev_transitions);
+  console.log("forward_tran: ", forward_transitions);
+  console.log("rev_tran: ", rev_transitions);
 
   // Careful!, it modifies final_graph
   final_graph["forward_transitions"] = forward_transitions;
