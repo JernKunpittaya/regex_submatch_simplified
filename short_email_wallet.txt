@@ -1,0 +1,22 @@
+Return-Path: <jernjern356@gmail.com>
+Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])
+        by mx.google.com with SMTPS id s21-20020a170903201500b001a1e39738efsor6807535pla.98.2023.04.05.04.56.06
+        for <teeramet.kunpit@gmail.com>
+        (Google Transport Security);
+        Wed, 05 Apr 2023 04:56:07 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jernjern356@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@gmail.com header.s=20210112 header.b=QoK41g+m;
+       spf=pass (google.com: domain of jernjern356@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=jernjern356@gmail.com;
+       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680695766;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=xUqTs2T2FPGCOB52rXuywLJoOoikRcDVuNz4ueT0GA4=;
+        b=QoK41g+m91nYJ8XHLrHcbdxISGgRcd7Y0yBIsRIXgFf5HdHmq8h2J+uIW7eAsvcVVE
+         wJRWwSQu1FARtZrOtngOaghtOr/7Rw94gkD8zFIx1PWo6ANrfEorX9zWNbrHAeiihc6X
+         8IEuaq5bMNl1ewaCjzhX5fIx4PfbwLwamOZs66p+XZ6U5+X6w83URGCQ9Kk/AwnPYTV0
+         3T2ykQm8hUFsASZW1AgKvmxVr3EW0H8pL+n+KOxSJHSV4OMSRI9xcuzb5WLFns9H+Tv4
+         h8xeyKnJMCOKnGEmyv56wGrg/hIkveL0+PdgCdxKe9Du/GqgKR8VIMMMNha3U2HDugkL
+         EHVQ==

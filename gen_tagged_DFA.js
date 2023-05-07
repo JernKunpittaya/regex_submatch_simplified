@@ -563,20 +563,28 @@ function regexSubmatchState(text, tagged_simp_graph) {
   let latest_arr = {};
   for (const tag in allTags) {
     submatch[tag] = [];
-    latest_ele[tag] = 0;
+    // latest_ele[tag] = 0;
+    // latest_arr[tag] = -1;
+    latest_ele[tag] = -2;
     latest_arr[tag] = -1;
   }
   // run through Transition
   let node = final_graph["start_state"];
-
+  console.log("allll: ", allTags);
   for (let i = 0; i < text.length; i++) {
     for (const tag in allTags) {
       if (
         allTags[tag].has(JSON.stringify([node, transitions[node][text[i]]]))
       ) {
+        // console.log("IN", i);
         if (i == latest_ele[tag] + 1) {
+          // console.log("check: ", i);
+          // submatch
+          // if (i==0){
+          //   submatch[tag]
+          // }
           submatch[tag][latest_arr[tag]].push(i);
-          latest_ele[tag] = i;
+          // latest_ele[tag] = i;
         } else {
           submatch[tag].push([i]);
           latest_arr[tag] += 1;
@@ -584,7 +592,9 @@ function regexSubmatchState(text, tagged_simp_graph) {
         latest_ele[tag] = i;
       }
     }
+    // console.log("from: ", node);
     node = transitions[node][text[i]];
+    // console.log("to: ", node);
   }
   return submatch;
 }
@@ -600,7 +610,7 @@ function finalRegexExtractState(regex, submatches, text) {
   for (const subs of matched_dfa[1]) {
     let matched = text.slice(subs[0], subs[1] + 1);
     let tag_result = regexSubmatchState(matched, tagged_simp_graph);
-    // console.log("tag result", tag_result);
+    console.log("tag result", tag_result);
     for (let index in tag_result) {
       for (let groupInd = 0; groupInd < tag_result[index].length; groupInd++) {
         console.log(

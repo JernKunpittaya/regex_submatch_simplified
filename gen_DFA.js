@@ -1,6 +1,6 @@
 const lexical = require("./lexical");
-const gen = require("./gen");
-const path = require("path");
+// const gen = require("./gen");
+// const path = require("path");
 const regexpTree = require("regexp-tree");
 const assert = require("assert");
 
