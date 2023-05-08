@@ -63,15 +63,33 @@ const email_wallet_text = fs.readFileSync("./email_wallet.txt").toString();
 // const alphabet =
 //   "[A-Z]|[a-z]|[0-9]|-|\\/|.|\"|#|$|%|&|'|\\(|\\)|\\*|\\+|:|<|=|>|\\?|@|\\[|]|^|_|`|{|\\||}|~| |\t|\n|\r|\x0b|\x0c";
 // // const sig_regex = `\nDKIM-Signature: (${succ_key_chars}=((${alphabet})+);( |\t|\n|\r|\x0b|\x0c)*)+ bh`;
-const sig_regex =
-  "\nDKIM-Signature: ((v|a|c|d|s|t|h)=(([A-Z]|[a-z]|[0-9]|-|\\/|.|\"|#|$|%|&|'|\\(|\\)|\\*|\\+|:|<|=|>|\\?|@|\\[|]|^|_|`|{|\\||}|~| |\t|\n|\r|\x0b|\x0c)+);( |\t|\n|\r|\x0b|\x0c)*)+ bh";
+// const sig_regex =
+//   "\nDKIM-Signature: ((v|a|c|d|s|t|h)=(([A-Z]|[a-z]|[0-9]|-|\\/|.|\"|#|$|%|&|'|\\(|\\)|\\*|\\+|:|<|=|>|\\?|@|\\[|]|^|_|`|{|\\||}|~| |\t|\n|\r|\x0b|\x0c)+);( |\t|\n|\r|\x0b|\x0c)*)+ bh";
 // // const submatches = [
 // //   [18, 32],
 // //   [34, 236],
 // // ];
-const submatches = [
-  [18, 32],
-  [34, 242],
-];
-gen.readSubmatch(sig_regex, submatches);
+// const submatches = [
+//   [18, 32],
+//   [34, 242],
+// ];
+// gen.readSubmatch(sig_regex, submatches);
 // gen_tagged_dfa.finalRegexExtractState(sig_regex, submatches, email_wallet_text);
+
+// Donate
+// const text =
+//   "Hi Jern, Thanks very much for your kindness. You've successfully donated 54.3 USD to climate, donated 60.5 USD to childcare, and 10000 USD to 0xParc. Share this to friends!";
+// const regex =
+//   "([Dd]onated|and) ([0-9]+(.[0-9]+)?) USD to (0xParc|climate|childcare|infra)";
+// const submatches = [[18, 65]];
+// gen.readSubmatch(regex, submatches);
+// gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);
+
+// Deal with epsilon
+const text =
+  "Hi Jern, Thanks very much for your kindness. You've successfully donated $54.3 USD to climate, donated 60.5 USD to childcare, and 10000 USD to 0xParc. Share this to friends!";
+const regex =
+  "([Dd]onated|and) ($)?([0-9]+(.[0-9]+)?) USD to (0xParc|climate|childcare|infra)";
+const submatches = [[22, 71]];
+gen.readSubmatch(regex, submatches);
+gen_tagged_dfa.finalRegexExtractState(regex, submatches, text);

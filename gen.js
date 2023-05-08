@@ -156,8 +156,10 @@ function regexToM1(text, submatches) {
     }
 
     switch (node.type) {
-      // Ignore this case first :)
-      // case "empty":
+      // Ignore this case first :) --> essential for ? case (since it creates "empty")
+      case "empty":
+        realStart.edges.push(["ϵ", interEnd]);
+        break;
       //   let mem = realStart.type + end.type;
       //   end = realStart;
       //   end.type = mem;
