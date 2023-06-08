@@ -1,6 +1,7 @@
 # regex_submatch_simplified
+[DEPRECATED] See complete version at https://github.com/JernKunpittaya/full_zk_regex
 
-Simplified version regex_submatch (for full version see prev repo)
+Simplified version regex_submatch [see the generalized version at https://github.com/JernKunpittaya/regex_submatch].  We simplify the generalization of subgroup match allowance to not allow reveal only "a" from (a|b) [not revealing anything if it matches b, which regex_submatch repo allows us to do] but to reveal "a" or "b" from a|b. [Hence reveal anyway either it matches a or b]. 
 
 Input: regex, submatches, text
 Output: Return new tagged DFA, with its corresponding state transition that belong to each tag
